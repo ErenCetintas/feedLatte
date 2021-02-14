@@ -27,14 +27,9 @@ public class scoreManager : MonoBehaviour {
 
 	public Text readyCountText;
 
-	private Animator endGameAnim;
-
 	void Awake(){
-		//endgame canvas
-		endGameAnim = endGameCanvas.gameObject.GetComponent<Animator>();
-		endGameAnim.enabled=false;
-		endGameCanvas.SetActive (false);
-			
+		//set hunger bar time
+		timeLeft = maxTime;
 		//time inactivate at start
 		Time.timeScale = 0;
 	}
@@ -75,7 +70,7 @@ public class scoreManager : MonoBehaviour {
 
 		//timerbar
 		timerBar = GetComponent<Image> ();
-		timeLeft = maxTime;
+		
 	}
 		
 
@@ -90,8 +85,12 @@ public class scoreManager : MonoBehaviour {
 
 		//latte timer
 		if (timeLeft > 0) {
-			timeLeft -= (Time.deltaTime*0.4f);
+			timeLeft -= (Time.deltaTime*4f);
 			timerBar.fillAmount = timeLeft / maxTime;
+			
+			//endgame canvas
+			endGameCanvas.SetActive (false);
+
 		} else if(timeLeft < 0 ) {
 			
 			//slow mo effect -- game end
@@ -101,13 +100,12 @@ public class scoreManager : MonoBehaviour {
 			
 
 			}while(Time.timeScale==0.1f);
-
 			//game over controller
-			if (Time.timeScale < 0.1f) {
-				endGameCalculations ();
-				Debug.Log("zaman durdu");
-			}
+			endGameCalculations ();
+			Debug.Log("zaman durdu");
 		}
+		
+			
 		//set max time 
 		if (timeLeft > 5) {
 			timeLeft = 5;
@@ -117,7 +115,6 @@ public class scoreManager : MonoBehaviour {
 
 	void endGameCalculations(){
 		endGameCanvas.SetActive (true);
-		endGameAnim.enabled=true;
 		scorePlayer1Text.text = "" + scorePlayer1;
 		scorePlayer2Text.text = "" + scorePlayer2;
 		if (scorePlayer1 > scorePlayer2) {
