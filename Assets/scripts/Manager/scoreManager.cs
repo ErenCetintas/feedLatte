@@ -90,7 +90,7 @@ public class scoreManager : MonoBehaviour {
 
 		//latte timer
 		if (timeLeft > 0) {
-			timeLeft -= (Time.deltaTime*0.2f);
+			timeLeft -= (Time.deltaTime*0.4f);
 			timerBar.fillAmount = timeLeft / maxTime;
 		} else if(timeLeft < 0 ) {
 			
